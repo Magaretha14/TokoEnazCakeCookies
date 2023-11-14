@@ -31,8 +31,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>Gambar</th>
-                                <th>Kategori</th>
                                 <th>Nama produk</th>
+                                <th>Kategori</th>
                                 <th>Harga jual</th>
                                 <th>Tanggal</th>
                                 <th>Aksi</th>
@@ -45,8 +45,8 @@
                                     <td>{{ $no }}</td>
                                     <td><img src="{{ url_images('gambar', $r->gambar) }}" class="img-fluid"
                                             style="width:80px;"></td>
-                                    <td>{{ $r->nama_kategori }}</td>
                                     <td>{{ $r->nama_produk }}</td>
+                                    <td>{{ $r->nama_kategori }}</td>
                                     <td>Rp{{ number_format($r->harga_jual) }},-</td>
                                     <td>{{ $r->created_at }}</td>
                                     <td>
@@ -62,16 +62,15 @@
                                             <form action="{{ route('admin.remove_bestseller', $r) }}" method="POST">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="submit" class="btn btn-danger">Remove Best Seller</button>
+                                                <button type="submit" class="btn btn-danger" style="margin-top: 5px">Remove Best Seller</button>
                                             </form>
                                         @else
                                             <form action="{{ route('admin.make_bestseller', $r) }}" method="POST">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="submit" class="btn btn-success">Make Best Seller</button>
+                                                <button type="submit" class="btn btn-success" style="margin-top: 5px">Make Best Seller</button>
                                             </form>
                                         @endif
-
                                     </td>
                                 </tr>
                                 @php $no++;@endphp
