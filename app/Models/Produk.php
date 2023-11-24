@@ -20,10 +20,16 @@ class Produk extends Model
         "deskripsi",
         "harga_jual",
         "is_best_seller",
+        "id_sub_kategori",
     ];
 
     public function kategori(){
         return $this->belongsTo(Kategori::class);
+    }
+
+    public function subkategori()
+    {
+        return $this->belongsTo(Subkategori::class);
     }
 
 }
