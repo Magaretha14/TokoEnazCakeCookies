@@ -18,7 +18,8 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(){
+    public function index()
+    {
         $data = [
             'title' => 'Admin Toko'
         ];
@@ -29,13 +30,13 @@ class AdminController extends Controller
     public function produk(Request $request)
     {
         $reqsearch = $request->get('search');
-        $produkdb = Produk::leftJoin('kategori','produk.id_kategori','=','kategori.id')
-            ->select('kategori.nama_kategori','produk.*')
-            ->when($reqsearch, function($query, $reqsearch){
-                $search = '%'.$reqsearch.'%';
+        $produkdb = Produk::leftJoin('kategori', 'produk.id_kategori', '=', 'kategori.id')
+            ->select('kategori.nama_kategori', 'produk.*')
+            ->when($reqsearch, function ($query, $reqsearch) {
+                $search = '%' . $reqsearch . '%';
                 return $query->whereRaw('nama_kategori like ? or nama_produk like ?', [
-                        $search, $search
-                    ]);
+                    $search, $search
+                ]);
             });
         $data = [
             'title'     => 'Data Produk',
@@ -58,7 +59,7 @@ class AdminController extends Controller
     // data proses produk
     public function create_produk(Request $request)
     {
-        $validator = \Validator::make($request->all(),[
+        $validator = \Validator::make($request->all(), [
             "id_kategori"   => "required",
             "gambar"        => "required|image|max:1024",
             "nama_produk"   => "required",
@@ -67,10 +68,10 @@ class AdminController extends Controller
             "is_best_seller" => "boolean",
         ]);
 
-        if($validator->passes()){
+        if ($validator->passes()) {
 
             $image = $request->file('gambar');
-            $input['imagename'] = 'produk_'.time().'.'.$image->getClientOriginalExtension();
+            $input['imagename'] = 'produk_' . time() . '.' . $image->getClientOriginalExtension();
 
             $destinationPath = storage_path('app/public/gambar');
             $image->move($destinationPath, $input['imagename']);
@@ -85,16 +86,15 @@ class AdminController extends Controller
                 'is_best_seller' => false,
                 //'is_best_seller' => $request->get("is_best_seller"),
             ]);
-            return redirect()->back()->with("success"," Berhasil Insert Data ! ");
-        }
-        else{
-            return redirect()->back()->withErrors($validator)->with("failed"," Gagal Insert Data ! ");
+            return redirect()->back()->with("success", " Berhasil Insert Data ! ");
+        } else {
+            return redirect()->back()->withErrors($validator)->with("failed", " Gagal Insert Data ! ");
         }
     }
 
     public function update_produk(Request $request)
     {
-        $validator = \Validator::make($request->all(),[
+        $validator = \Validator::make($request->all(), [
             "id"            => "required",
             "id_kategori"   => "required",
             "nama_produk"   => "required",
@@ -103,25 +103,23 @@ class AdminController extends Controller
             //"is_best_seller" => "required",
         ]);
 
-        if($validator->passes()){
+        if ($validator->passes()) {
             $produkdb = Produk::findorFail($request->get('id'));
-            if($request->file('gambar')){
-                $validator = \Validator::make($request->all(),[
+            if ($request->file('gambar')) {
+                $validator = \Validator::make($request->all(), [
                     "gambar" => "required|image|max:1024",
                 ]);
-                if($validator->passes()){
+                if ($validator->passes()) {
                     $image = $request->file('gambar');
-                    $input['imagename'] = 'produk_'.time().'.'.$image->getClientOriginalExtension();
+                    $input['imagename'] = 'produk_' . time() . '.' . $image->getClientOriginalExtension();
 
                     $destinationPath = storage_path('app/public/gambar');
                     $image->move($destinationPath, $input['imagename']);
                     $gambar = $input['imagename'];
+                } else {
+                    return redirect()->back()->withErrors($validator)->with("failed", " Gagal Update Data ! ");
                 }
-                else{
-                    return redirect()->back()->withErrors($validator)->with("failed"," Gagal Update Data ! ");
-                }
-            }
-            else{
+            } else {
                 $gambar = $produkdb->gambar;
             }
 
@@ -135,10 +133,9 @@ class AdminController extends Controller
                 //'is_best_seller' => $request->get("is_best_seller"),
             ]);
 
-            return redirect()->back()->with("success"," Berhasil Update Data Produk ".$request->get("nama_produk").' !');
-        }
-        else{
-            return redirect()->back()->withErrors($validator)->with("failed"," Gagal Update Data ! ");
+            return redirect()->back()->with("success", " Berhasil Update Data Produk " . $request->get("nama_produk") . ' !');
+        } else {
+            return redirect()->back()->withErrors($validator)->with("failed", " Gagal Update Data ! ");
         }
     }
 
@@ -146,19 +143,21 @@ class AdminController extends Controller
     {
         $produk = Produk::findOrFail($id);
         $produk->delete();
-        return redirect()->back()->with("success"," Berhasil Delete Data Produk ! ");
+        return redirect()->back()->with("success", " Berhasil Delete Data Produk ! ");
     }
 
-    public function make_bestseller(Produk $produk, Request $request, $id){
+    public function make_bestseller(Produk $produk, Request $request, $id)
+    {
         // $produk->id_kategori = $request->get('id_kategori');
         $produk = Produk::findOrFail($id);
         $produk->timestamps = false;
-        $produk -> is_best_seller = true;
-        $produk -> save();
+        $produk->is_best_seller = true;
+        $produk->save();
         return back()->with('success', 'Ini adalah produk Best Seller!');
     }
 
-    public function remove_bestseller(Produk $produk, $id){
+    public function remove_bestseller(Produk $produk, $id)
+    {
         $produk = Produk::findOrFail($id);
         if ($produk->id != 1) {
             $produk->timestamps = false;
@@ -173,10 +172,9 @@ class AdminController extends Controller
     // kategori
     public function kategori(Request $request)
     {
-        if(!empty($request->get('id'))){
+        if (!empty($request->get('id'))) {
             $edit = Kategori::findOrFail($request->get('id'));
-        }
-        else{
+        } else {
             $edit = '';
         }
 
@@ -192,36 +190,34 @@ class AdminController extends Controller
     // data proses kategori
     public function create_kategori(Request $request)
     {
-        $validator = \Validator::make($request->all(),[
+        $validator = \Validator::make($request->all(), [
             "nama_kategori" => "required",
         ]);
-        if($validator->passes()) {
+        if ($validator->passes()) {
             Kategori::insert([
                 'nama_kategori' => $request->get("nama_kategori"),
                 'created_at'    => date('Y-m-d H:i:s'),
             ]);
-            return redirect()->back()->with("success"," Berhasil Insert Data ! ");
-        }
-        else{
-            return redirect()->back()->withErrors($validator)->with("failed"," Gagal Insert Data ! ");
+            return redirect()->back()->with("success", " Berhasil Insert Data ! ");
+        } else {
+            return redirect()->back()->withErrors($validator)->with("failed", " Gagal Insert Data ! ");
         }
     }
 
     public function update_kategori(Request $request)
     {
-        $validator = \Validator::make($request->all(),[
+        $validator = \Validator::make($request->all(), [
             "id"            => "required",
             "nama_kategori" => "required",
         ]);
-        if($validator->passes()) {
+        if ($validator->passes()) {
             Kategori::findOrFail($request->get('id'))->update([
                 'nama_kategori' => $request->get("nama_kategori"),
                 'update_at' => date('Y-m-d H:i:s'),
             ]);
-            return redirect()->back()->with("success"," Berhasil Update Data ! ");
-        }
-        else{
-            return redirect()->back()->withErrors($validator)->with("failed"," Gagal Update Data ! ");
+            return redirect()->back()->with("success", " Berhasil Update Data ! ");
+        } else {
+            return redirect()->back()->withErrors($validator)->with("failed", " Gagal Update Data ! ");
         }
     }
 
@@ -230,75 +226,85 @@ class AdminController extends Controller
     {
         $kategori = Kategori::findOrFail($id);
         $kategori->delete();
-        return redirect()->back()->with("success"," Berhasil Delete Data ! ");
+        return redirect()->back()->with("success", " Berhasil Delete Data ! ");
     }
 
     public function subkategori(Request $request)
     {
-        $edit = SubKategori::leftJoin('kategori', 'subkategori.id_kategori', '=', 'kategori.id')
-        ->select('kategori.nama_kategori', 'subkategori.*');
+        $subkategoriQuery = SubKategori::leftJoin('kategori', 'sub_kategori.id_kategori', '=', 'kategori.id')
+            ->select('kategori.nama_kategori', 'sub_kategori.*');
 
-        if(!empty($request->get('id'))){
+        $edit = '';
+
+        if (!empty($request->get('id'))) {
             $edit = SubKategori::findOrFail($request->get('id'));
         }
-        else{
-            $edit = '';
-        }
+
+        $subkategori = $subkategoriQuery->paginate(5);
 
         $data = [
-            'title'     => 'Data Sub Kategori',
-            'subkategori'  => SubKategori::paginate(5),
-            'kategori'  => Kategori::all(),
-            'edit'      => $edit,
-            'request'   => $request
+            'title'       => 'Data Sub Kategori',
+            'subkategori' => $subkategori,
+            'kategori'    => Kategori::all(),
+            'edit'        => $edit,
+            'request'     => $request
         ];
+
         return view('contents.admin.subkategori', $data);
     }
+
 
     // data proses kategori
     public function create_subkategori(Request $request)
     {
-        $validator = \Validator::make($request->all(),[
+        $validator = \Validator::make($request->all(), [
             "id_kategori" => "required",
             "nama_subkategori" => "required",
         ]);
-        if($validator->passes()) {
+        if ($validator->passes()) {
             SubKategori::insert([
                 'id_kategori' => $request->get('id_kategori'),
                 'nama_subkategori' => $request->get("nama_subkategori"),
                 'created_at'    => date('Y-m-d H:i:s'),
             ]);
-            return redirect()->back()->with("success"," Berhasil Insert Data ! ");
-        }
-        else{
-            return redirect()->back()->withErrors($validator)->with("failed"," Gagal Insert Data ! ");
+            return redirect()->back()->with("success", " Berhasil Insert Data ! ");
+        } else {
+            return redirect()->back()->withErrors($validator)->with("failed", " Gagal Insert Data ! ");
         }
     }
 
     public function update_subkategori(Request $request)
     {
-        $validator = \Validator::make($request->all(),[
-            "id"            => "required",
+        $validator = \Validator::make($request->all(), [
+            // "id"               => "required", // Ensure the id exists in the subkategori table
+            "id_kategori"      => "required",
             "nama_subkategori" => "required",
         ]);
-        if($validator->passes()) {
-            SubKategori::findOrFail($request->get('id'))->update([
-                'nama_subkategori' => $request->get("nama_subkategori"),
-                'update_at' => date('Y-m-d H:i:s'),
-            ]);
-            return redirect()->back()->with("success"," Berhasil Update Data ! ");
-        }
-        else{
-            return redirect()->back()->withErrors($validator)->with("failed"," Gagal Update Data ! ");
+
+        if ($validator->passes()) {
+            try {
+                SubKategori::findOrFail($request->get('id'))->update([
+                    'nama_subkategori' => $request->get("nama_subkategori"),
+                    'id_kategori'      => $request->get("id_kategori"),
+                    'updated_at'       => now(),
+                ]);
+
+                return redirect()->back()->with("success", "Berhasil Update Data!");
+            } catch (\Exception $e) {
+                return redirect()->back()->with("failed", "Gagal Update Data! " . $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->withErrors($validator)->with("failed", "Gagal Update Data!");
         }
     }
+
 
 
     public function delete_subkategori(Request $request, $id)
     {
         $subkategori = SubKategori::findOrFail($id);
         $subkategori->delete();
-        return redirect()->back()->with("success"," Berhasil Delete Data ! ");
+        return redirect()->back()->with("success", " Berhasil Delete Data ! ");
     }
 
 
@@ -316,17 +322,15 @@ class AdminController extends Controller
     // data proses profil
     public function update_profil(Request $request)
     {
-        $validator = \Validator::make($request->all(),[
+        $validator = \Validator::make($request->all(), [
             "name"                  => "required",
             "email"                 => "required",
             "password"              => "required|min:6",
             "password_confirmation" => "required|min:6",
         ]);
 
-        if($validator->passes())
-        {
-            if($request->get("password") == $request->get("password_confirmation"))
-            {
+        if ($validator->passes()) {
+            if ($request->get("password") == $request->get("password_confirmation")) {
                 User::findOrFail(auth()->user()->id)->update([
                     'name'          => $request->get("name"),
                     'email'         => $request->get("email"),
@@ -335,14 +339,12 @@ class AdminController extends Controller
                     'password'      => Hash::make($request->get("password")),
                     'updated_at'    => date('Y-m-d H:i:s'),
                 ]);
-                return redirect()->back()->with("success"," Berhasil Update Data ! ");
+                return redirect()->back()->with("success", " Berhasil Update Data ! ");
+            } else {
+                return redirect()->back()->with("failed", "Confirm Password Tidak Sama !");
             }
-            else{
-                return redirect()->back()->with("failed","Confirm Password Tidak Sama !");
-            }
-        }
-        else{
-            return redirect()->back()->withErrors($validator)->with("failed"," Gagal Update Data ! ");
+        } else {
+            return redirect()->back()->withErrors($validator)->with("failed", " Gagal Update Data ! ");
         }
     }
 }

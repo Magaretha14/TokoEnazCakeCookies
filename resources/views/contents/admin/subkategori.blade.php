@@ -40,9 +40,9 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
 
-                            {{-- @if (!empty($request->get('id')))
+                            @if (!empty($request->get('id')))
                                 <input type="hidden" value="{{ $request->get('id') }}" name="id">
-                            @endif --}}
+                            @endif
                         </div>
 
                         <br>
