@@ -33,8 +33,8 @@
                                 <th>Gambar</th>
                                 <th>Nama produk</th>
                                 <th>Kategori</th>
+                                <th>Subkategori</th>
                                 <th>Harga jual</th>
-                                <th>Tanggal</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -47,8 +47,9 @@
                                             style="width:80px;"></td>
                                     <td>{{ $r->nama_produk }}</td>
                                     <td>{{ $r->nama_kategori }}</td>
+                                    <td>{{ $r->nama_subkategori }}</td>
                                     <td>Rp{{ number_format($r->harga_jual) }},-</td>
-                                    <td>{{ $r->created_at }}</td>
+
                                     <td>
                                         <a href="javascript:void(0)" data-id="{{ $r->id }}"
                                             class="btn btn-success btn-sm ubah" title="Edit">
@@ -62,13 +63,15 @@
                                             <form action="{{ route('admin.remove_bestseller', $r) }}" method="POST">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="submit" class="btn btn-danger" style="margin-top: 5px">Remove Best Seller</button>
+                                                <button type="submit" class="btn btn-danger" style="margin-top: 5px">Remove
+                                                    Best Seller</button>
                                             </form>
                                         @else
                                             <form action="{{ route('admin.make_bestseller', $r) }}" method="POST">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="submit" class="btn btn-success" style="margin-top: 5px">Make Best Seller</button>
+                                                <button type="submit" class="btn btn-success" style="margin-top: 5px">Make
+                                                    Best Seller</button>
                                             </form>
                                         @endif
                                     </td>
@@ -87,7 +90,7 @@
             </div>
         </div>
 
-        <!-- Modal -->
+        <!-- Modal (Form)-->
         <div class="modal fade" id="modelIdPlus" data-bs-backdrop="static" tabindex="-1" role="dialog"
             aria-labelledby="modelTitleId" aria-hidden="true">
             <div class="modal-dialog modal-md" role="document">
@@ -100,59 +103,94 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="">Kategori</label>
-                                <select class="form-select" name="id_kategori" required>
-                                    @foreach ($kategori as $r)
-                                        <option value="{{ $r->id }}">{{ $r->nama_kategori }}</option>
-                                    @endforeach
-                                </select>
-                                @error('id_kategori')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                                <div class="mb-3">
+                                    <label for="id_kategori" class="form-label">{{ __('Kategori') }}</label>
+                                    <select class="form-select" id="id_kategori" name="id_kategori" required>
+                                        <option value="" selected>Pilih Kategori</option>
+                                        @foreach ($kategori as $r)
+                                            <option value="{{ $r->id }}">
+                                                {{ $r->nama_kategori }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('id_kategori')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="id_sub_kategori" class="form-label">{{ __('Subkategori') }}</label>
+                                    <select class="form-select" id="id_sub_kategori" name="id_sub_kategori" required>
+                                        <option value="" selected>Pilih Subkategori</option>
+                                        @foreach ($subkategori as $sub)
+                                            <option value="{{ $sub->id }}" data-kategori="{{ $sub->id_kategori }}">
+                                                {{ $sub->nama_subkategori }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('id_sub_kategori')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <script>
+                                    document.getElementById('id_kategori').addEventListener('change', function () {
+                                        var selectedKategori = this.value;
+                                        var subkategoriOptions = document.getElementById('id_sub_kategori').options;
+
+                                        for (var i = 0; i < subkategoriOptions.length; i++) {
+                                            var option = subkategoriOptions[i];
+
+                                            if (option.getAttribute('data-kategori') === selectedKategori || selectedKategori === '') {
+                                                option.style.display = '';
+                                            } else {
+                                                option.style.display = 'none';
+                                            }
+                                        }
+                                    });
+                                </script>
                             </div>
-                            <div class="form-group mt-3">
-                                <label for="">Nama Produk</label>
-                                <input type="text" class="form-control @error('nama_produk') is-invalid @enderror"
-                                    required value="{{ old('nama_produk') }}" name="nama_produk" id="nama_produk"
-                                    placeholder="">
-                                @error('nama_produk')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="">Deskripsi</label>
-                                <textarea class="form-control @error('deskripsi') is-invalid @enderror" rows="5" required name="deskripsi"
-                                    id="deskripsi" placeholder="">{{ old('deskripsi') }}</textarea>
-                                @error('deskripsi')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="">Harga jual</label>
-                                <input type="number" class="form-control @error('harga_jual') is-invalid @enderror"
-                                    required value="{{ old('harga_jual') }}" name="harga_jual" id="harga_jual"
-                                    placeholder="">
-                                @error('harga_jual')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="">Gambar</label>
-                                <input type="file" class="form-control @error('gambar') is-invalid @enderror" required
-                                    value="{{ old('gambar') }}" name="gambar" id="gambar" placeholder="">
-                                @error('gambar')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+                        <div class="form-group mt-3">
+                            <label for="">Nama Produk</label>
+                            <input type="text" class="form-control @error('nama_produk') is-invalid @enderror" required
+                                value="{{ old('nama_produk') }}" name="nama_produk" id="nama_produk" placeholder="">
+                            @error('nama_produk')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                        <div class="form-group mt-3">
+                            <label for="">Deskripsi</label>
+                            <textarea class="form-control @error('deskripsi') is-invalid @enderror" rows="5" required name="deskripsi"
+                                id="deskripsi" placeholder="">{{ old('deskripsi') }}</textarea>
+                            @error('deskripsi')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
-                    </form>
+                        <div class="form-group mt-3">
+                            <label for="">Harga jual</label>
+                            <input type="number" class="form-control @error('harga_jual') is-invalid @enderror" required
+                                value="{{ old('harga_jual') }}" name="harga_jual" id="harga_jual" placeholder="">
+                            @error('harga_jual')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="">Gambar</label>
+                            <input type="file" class="form-control @error('gambar') is-invalid @enderror" required
+                                value="{{ old('gambar') }}" name="gambar" id="gambar" placeholder="">
+                            @error('gambar')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+                </form>
             </div>
         </div>
+    </div>
     </div>
     <div class="modal fade" id="modelIdEdit" data-bs-backdrop="static" tabindex="-1" role="dialog"
         aria-labelledby="modelTitleId" aria-hidden="true">

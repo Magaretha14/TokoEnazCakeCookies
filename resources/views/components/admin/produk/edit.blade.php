@@ -1,3 +1,4 @@
+{{-- Form Edit --}}
 <div class="modal-header">
     <h5 class="modal-title">Edit Produk</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -20,7 +21,7 @@
             <label for="">Nama Produk</label>
             <input type="text" class="form-control @error("nama_produk") is-invalid @enderror" value="{{$edit->nama_produk}}" name="nama_produk" id="nama_produk" placeholder="">
         </div>
-        
+
         <div class="form-group mt-3">
             <label for="">Deskripsi</label>
             <textarea class="form-control @error("deskripsi") is-invalid @enderror" rows="8" name="deskripsi" id="deskripsi" placeholder="">{{$edit->deskripsi}}</textarea>
@@ -31,7 +32,7 @@
         </div>
         <div class="form-group mt-3">
             <label for="">Gambar <small class="text-danger ms-1">* Opsional</small></label>
-            <input type="file" class="form-control @error("gambar") is-invalid @enderror" value="{{old("gambar")}}" 
+            <input type="file" class="form-control @error("gambar") is-invalid @enderror" value="{{old("gambar")}}"
                  name="gambar" id="gambar" placeholder="">
             @error("gambar")
                 <span class="text-danger">{{ $message }}</span>

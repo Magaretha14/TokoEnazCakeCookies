@@ -31,26 +31,32 @@ class AdminController extends Controller
     {
         $reqsearch = $request->get('search');
         $produkdb = Produk::leftJoin('kategori', 'produk.id_kategori', '=', 'kategori.id')
-            ->select('kategori.nama_kategori', 'produk.*')
+            ->leftJoin('sub_kategori', 'produk.id_sub_kategori', '=', 'sub_kategori.id')
+            ->select('sub_kategori.nama_subkategori', 'kategori.nama_kategori as nama_kategori', 'produk.*')
             ->when($reqsearch, function ($query, $reqsearch) {
                 $search = '%' . $reqsearch . '%';
-                return $query->whereRaw('nama_kategori like ? or nama_produk like ?', [
+                return $query->whereRaw('nama_subkategori like ? or nama_produk like ?', [
                     $search, $search
                 ]);
             });
+
         $data = [
             'title'     => 'Data Produk',
-            'kategori'  => Kategori::All(),
+            'kategori'  => Kategori::all(),
+            'subkategori' => SubKategori::all(), // Menambahkan data subkategori
             'produk'    => $produkdb->latest()->paginate(5),
             'request'   => $request
         ];
+
         return view('contents.admin.produk', $data);
     }
+
 
     public function edit_produk(Request $request)
     {
         $data = [
             'edit' => Produk::findOrFail($request->get('id')),
+            'sub_kategori' => SubKategori::all(),
             'kategori' => Kategori::All(),
         ];
         return view('components.admin.produk.edit', $data);
@@ -66,6 +72,7 @@ class AdminController extends Controller
             "deskripsi"     => "required",
             "harga_jual"    => "required",
             "is_best_seller" => "boolean",
+            "id_sub_kategori" => "required",
         ]);
 
         if ($validator->passes()) {
@@ -84,6 +91,7 @@ class AdminController extends Controller
                 'harga_jual'    => $request->get("harga_jual"),
                 'created_at'    => date('Y-m-d H:i:s'),
                 'is_best_seller' => false,
+                'id_sub_kategori' => $request->get('id_subkategori'),
                 //'is_best_seller' => $request->get("is_best_seller"),
             ]);
             return redirect()->back()->with("success", " Berhasil Insert Data ! ");
@@ -100,6 +108,7 @@ class AdminController extends Controller
             "nama_produk"   => "required",
             "deskripsi"     => "required",
             "harga_jual"    => "required",
+            "id_sub_kategori" => "required",
             //"is_best_seller" => "required",
         ]);
 
@@ -130,6 +139,7 @@ class AdminController extends Controller
                 'deskripsi'     => $request->get("deskripsi"),
                 'harga_jual'    => $request->get("harga_jual"),
                 'updated_at'    => date('Y-m-d H:i:s'),
+                "id_sub_kategori" => $request->get("id_subkategori"),
                 //'is_best_seller' => $request->get("is_best_seller"),
             ]);
 
