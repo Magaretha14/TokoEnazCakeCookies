@@ -17,11 +17,11 @@
                     </div>
                     <div class="card-body">
                         @if (!empty($request->get('id')))
-                            <form method="post" action="{{ route('update_subkategori') }}">
+                            <form method="post" action="{{ route('admin.update_subkategori') }}">
                             @else
-                                <form method="post" action="{{ route('create_subkategori') }}">
+                                <form method="post" action="{{ route('admin.create_subkategori') }}">
                         @endif
-
+                        @csrf
                         <div class="form-group">
                             <label for="nama_subkategori">Nama Sub Kategori</label>
                             @if (!empty($request->get('id')))
@@ -40,9 +40,9 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
 
-                            @if (!empty($request->get('id')))
+                            {{-- @if (!empty($request->get('id')))
                                 <input type="hidden" value="{{ $request->get('id') }}" name="id">
-                            @endif
+                            @endif --}}
                         </div>
 
                         <br>
@@ -62,10 +62,8 @@
 
                         <button type="submit" class="btn btn-primary mt-3 btn-md">Simpan</button>
                         @if (!empty($request->get('id')))
-                            <a href="{{ route('subkategori') }}" class="btn btn-danger mt-3">Kembali</a>
+                            <a href="{{ route('admin.subkategori') }}" class="btn btn-danger mt-3">Kembali</a>
                         @endif
-
-
                         </form>
                     </div>
                 </div>
@@ -94,11 +92,11 @@
                                             <td>{{ $r->nama_subkategori }}</td>
                                             <td>{{ $r->nama_kategori }}</td>
                                             <td>
-                                                <a href="{{ url("admin/kategori?id=$r->id") }}"
+                                                <a href="{{ url("admin/subkategori?id=$r->id") }}"
                                                     class="btn btn-success btn-sm" title="Edit">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                <a href="{{ url("admin/kategori/delete/$r->id") }}"
+                                                <a href="{{ url("admin/subkategori/delete/$r->id") }}"
                                                     class="btn btn-danger btn-sm"
                                                     onclick="javascript:return confirm(`Data ingin dihapus ?`);"
                                                     title="Delete">
@@ -109,7 +107,7 @@
                                         @php $no++;@endphp
                                     @empty
                                         <tr>
-                                            <td colspan="3">
+                                            <td colspan="4">
                                                 Tidak Ada Data
                                             </td>
                                         </tr>

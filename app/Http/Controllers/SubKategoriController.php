@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class SubKategoriController extends Controller
 {
 
-    public function subkategori(Request $request)
+    public function subkategorinew(Request $request)
     {
         if(!empty($request->get('id'))){
             $edit = SubKategori::findOrFail($request->get('id'));

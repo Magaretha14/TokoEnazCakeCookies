@@ -47,10 +47,10 @@ Route::group(['middleware' => 'revalidate'], function() {
         Route::post('update', [App\Http\Controllers\AdminController::class, 'update_profil'])->name('admin.update_profil');
     });
     //route subkategori
-    Route::prefix('subkategori')->group(function () {
-        Route::get('/', [App\Http\Controllers\SubKategoriController::class, 'subkategori'])->name('subkategori');
-        Route::post('update', [App\Http\Controllers\SubKategoriController::class,'update_subkategori'])->name('update_subkategori');
-        Route::post('create', [App\Http\Controllers\SubKategoriController::class, 'create_subkategori'])->name('create_subkategori');
-        Route::get('delete/{subkategori}', [App\Http\Controllers\SubKategoriController::class, 'delete_subkategori'])->name('delete_subkategori');
+    Route::prefix('admin/subkategori')->group(function () {
+        Route::get('/', [App\Http\Controllers\AdminController::class, 'subkategori'])->name('admin.subkategori');
+        Route::post('update', [App\Http\Controllers\AdminController::class,'update_subkategori'])->name('admin.update_subkategori');
+        Route::post('create', [App\Http\Controllers\AdminController::class, 'create_subkategori'])->name('admin.create_subkategori');
+        Route::get('delete/{subkategori}', [App\Http\Controllers\AdminController::class, 'delete_subkategori'])->name('admin.delete_subkategori');
     });
 });

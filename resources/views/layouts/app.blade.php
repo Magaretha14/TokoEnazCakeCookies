@@ -39,7 +39,7 @@
                                 <a class="nav-link active" aria-current="page" href="{{ route('admin.kategori') }}">Data Kategori</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{{ route('subkategori') }}">Data Sub-Kategori</a>
+                                <a class="nav-link active" aria-current="page" href="{{ route('admin.subkategori') }}">Data Sub-Kategori</a>
                             </li>
                         @endif
                         <!-- Authentication Links -->
