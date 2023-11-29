@@ -54,11 +54,23 @@ class AdminController extends Controller
 
     public function edit_produk(Request $request)
     {
+        $produk = Produk::findOrFail($request->get('id'));
+
+        // Ambil semua kategori
+        $kategori = Kategori::all();
+
+        // Jika kategori lama dipilih, ambil subkategori terkait dengan kategori produk
+        if ($produk->id_kategori) {
+            $subkategori = SubKategori::where('id_kategori', $produk->id_kategori)->get();
+        } else {
+            $subkategori = collect(); // Jika kategori baru, subkategori dikosongkan
+        }
         $data = [
-            'edit' => Produk::findOrFail($request->get('id')),
-            'sub_kategori' => SubKategori::all(),
-            'kategori' => Kategori::All(),
+            'edit' => $produk,
+            'subkategori' => $subkategori,
+            'kategori' => $kategori,
         ];
+
         return view('components.admin.produk.edit', $data);
     }
 
@@ -91,7 +103,7 @@ class AdminController extends Controller
                 'harga_jual'    => $request->get("harga_jual"),
                 'created_at'    => date('Y-m-d H:i:s'),
                 'is_best_seller' => false,
-                'id_sub_kategori' => $request->get('id_subkategori'),
+                'id_sub_kategori' => $request->get('id_sub_kategori'),
                 //'is_best_seller' => $request->get("is_best_seller"),
             ]);
             return redirect()->back()->with("success", " Berhasil Insert Data ! ");
@@ -134,14 +146,17 @@ class AdminController extends Controller
 
             $produkdb->update([
                 'id_kategori'   => $request->get("id_kategori"),
+                "id_sub_kategori" => $request->get("id_sub_kategori"),
                 'gambar'        => $gambar,
                 'nama_produk'   => $request->get("nama_produk"),
                 'deskripsi'     => $request->get("deskripsi"),
                 'harga_jual'    => $request->get("harga_jual"),
                 'updated_at'    => date('Y-m-d H:i:s'),
-                "id_sub_kategori" => $request->get("id_subkategori"),
+
                 //'is_best_seller' => $request->get("is_best_seller"),
             ]);
+
+            // Produk::where('id', $request->get('id'))->update($produkdb);
 
             return redirect()->back()->with("success", " Berhasil Update Data Produk " . $request->get("nama_produk") . ' !');
         } else {

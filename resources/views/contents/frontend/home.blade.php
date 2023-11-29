@@ -35,6 +35,10 @@
         <div class="col-sm-9 mx-auto">
             <!--product -->
             <div class="product">
+                <h4 class="mb-4"><b>Best Seller</b></h4>
+                @include('components.frontend.produk_bestseller')
+            </div>
+            <div class="product">
                 <h4 class="mb-4"><b>Terbaru</b></h4>
                 @include('components.frontend.produk_list')
             </div>
