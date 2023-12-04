@@ -15,10 +15,10 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-custom shadow-sm py-3">
+        <nav class="navbar navbar-expand-md navbar-custom shadow-sm py-3" style="background-color: white">
             <div class="container">
                 @if(!empty(auth()->user()->id))
-                <a class="navbar-brand" href="{{ route('admin.index') }}"><b>{{ config('app.name') }}</b></a>
+                <a class="navbar-brand" href="{{ route('admin.index') }}"><b>Enas Cookiez</b></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon text-dark pt-2"><i class="fas fa-bars"></i></span>
                 </button>

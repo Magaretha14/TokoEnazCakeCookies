@@ -30,7 +30,7 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
-<div class="container mt-5">
+<div class="container mt-5" style="background-color: white">
     <div class="row">
         <div class="col-sm-9 mx-auto">
             <!--product -->
@@ -43,7 +43,7 @@
                 @include('components.frontend.produk_list')
             </div>
             <!-- end product -->
-            <div class="official mt-3">
+            <div class="official mt-3" style="background-color: #FFE5EC; margin-bottom: 40px">
                 <div class="row">
                     <div class="col-sm-7">
                         <div class="official-content">

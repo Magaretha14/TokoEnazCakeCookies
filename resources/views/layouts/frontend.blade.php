@@ -64,12 +64,12 @@
             $profil = App\Models\User::where('id', 1)->first();
         @endphp
         <div class="clearfix  mt-5 pt-4"></div>
-        <div class="main">
+        <div class="main" style="background-color: white">
             @yield('content')
         </div>
         <!-- end main -->
         <!-- footer -->
-        <div class="footer">
+        <div class="footer" style="background-color: #FFE5EC; ">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-8">
@@ -90,8 +90,8 @@
                 </div>
             </div>
         </div>
-        <div class="copyright">
-            <div class="container text-center">
+        <div class="copyright" style="background-color: #FB6F92">
+            <div class="container text-center" style="color: white">
                 Copyright &copy; <?= date('Y');?> {{ config('app.name') }} All Reserved
                 <br>
                 Enaz Cake & Cookies

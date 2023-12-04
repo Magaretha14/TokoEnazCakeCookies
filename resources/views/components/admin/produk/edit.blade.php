@@ -7,12 +7,30 @@
     @csrf
     <div class="modal-body">
         <div class="form-group">
-            <div class="mb-3">
+            {{-- <div class="mb-3">
                 <label for="">Kategori</label>
-                <select class="form-select" name="id_kategori" required>
+                <select class="form-select" id="id_kategori" name="id_kategori" disabled required>
                     @foreach ($kategori as $r)
-                        <option value="{{ $r->id }}" {{ $edit->id_kategori == $r->id ? 'selected' : '' }}>
-                            {{ $r->nama_kategori }}</option>
+                        <option value="{{ $r->id }}">
+                            {{ $r->nama_kategori }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('id_kategori')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div> --}}
+            <!-- Input tersembunyi untuk menyimpan nilai id_kategori -->
+            <input type="hidden" name="id_kategori" value="{{ $kategori->first()->id }}">
+
+            <div class="mb-3">
+                <label for="id_kategori_select">Kategori</label>
+                <select class="form-select" id="id_kategori_select" name="id_kategori_select" disabled required>
+                    @foreach ($kategori as $r)
+                        <option value="{{ $r->id }}"
+                            {{ old('id_kategori_select', $kategori->first()->id) == $r->id ? 'selected' : '' }}>
+                            {{ $r->nama_kategori }}
+                        </option>
                     @endforeach
                 </select>
                 @error('id_kategori')
@@ -23,7 +41,7 @@
             <div class="form-group mt-3">
                 <div class="mb-3">
                     <label for="">Sub Kategori</label>
-                    <select class="form-select" name="id_sub_kategori" required>
+                    <select class="form-select" id="id_sub_kategori" name="id_sub_kategori" required>
                         @foreach ($subkategori as $sub)
                             <option value="{{ $sub->id }}"
                                 {{ $edit->id_sub_kategori == $sub->id ? 'selected' : '' }}>
@@ -36,10 +54,10 @@
                     @enderror
                 </div>
                 <script>
-                    document.getElementById('id_kategori').addEventListener('change', function () {
+                    console.log("test");
+                    document.getElementById('id_kategori').addEventListener('change', function() {
                         var selectedKategori = this.value;
                         var subkategoriSelect = document.getElementById('id_sub_kategori');
-
                         // Menggunakan AJAX untuk mendapatkan subkategori berdasarkan kategori
                         fetch(`/get-subkategori?kategori_id=${selectedKategori}`)
                             .then(response => response.json())

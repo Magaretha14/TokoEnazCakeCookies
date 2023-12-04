@@ -56,15 +56,13 @@ class AdminController extends Controller
     {
         $produk = Produk::findOrFail($request->get('id'));
 
-        // Ambil semua kategori
         $kategori = Kategori::all();
-
-        // Jika kategori lama dipilih, ambil subkategori terkait dengan kategori produk
         if ($produk->id_kategori) {
             $subkategori = SubKategori::where('id_kategori', $produk->id_kategori)->get();
         } else {
             $subkategori = collect(); // Jika kategori baru, subkategori dikosongkan
         }
+
         $data = [
             'edit' => $produk,
             'subkategori' => $subkategori,
