@@ -57,18 +57,19 @@ class AdminController extends Controller
         $produk = Produk::findOrFail($request->get('id'));
 
         $kategori = Kategori::all();
-        if ($produk->id_kategori) {
-            $subkategori = SubKategori::where('id_kategori', $produk->id_kategori)->get();
-        } else {
-            $subkategori = collect(); // Jika kategori baru, subkategori dikosongkan
-        }
+        $subkategori = SubKategori::all();
+        // if ($produk->id_kategori) {
+        //     $subkategori = SubKategori::where('id_kategori', $produk->id_kategori)->get();
+        // } else {
+        //     $subkategori = collect(); // Jika kategori baru, subkategori dikosongkan
+        // }
 
         $data = [
             'edit' => $produk,
             'subkategori' => $subkategori,
             'kategori' => $kategori,
         ];
-
+        // dd($produk);
         return view('components.admin.produk.edit', $data);
     }
 

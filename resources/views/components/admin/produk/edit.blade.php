@@ -1,10 +1,12 @@
 {{-- Form Edit --}}
-<div class="modal-header">
+{{-- <div class="modal-header">
     <h5 class="modal-title">Edit Produk</h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-</div>
+</div> --}}
+
+@extends('layouts.app')
+@section('content')
 <form method="post" action="{{ route('admin.update_produk') }}" enctype="multipart/form-data">
-    @csrf
     <div class="modal-body">
         <div class="form-group">
             {{-- <div class="mb-3">
@@ -25,7 +27,7 @@
 
             <div class="mb-3">
                 <label for="id_kategori_select">Kategori</label>
-                <select class="form-select" id="id_kategori_select" name="id_kategori_select" disabled required>
+                <select class="form-select" id="id_kategori_select" name="id_kategori_select" required>
                     @foreach ($kategori as $r)
                         <option value="{{ $r->id }}"
                             {{ old('id_kategori_select', $kategori->first()->id) == $r->id ? 'selected' : '' }}>
@@ -111,3 +113,5 @@
         <button type="submit" class="btn btn-primary">Save</button>
     </div>
 </form>
+@endsection
+

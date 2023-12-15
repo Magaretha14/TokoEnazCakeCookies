@@ -15,7 +15,7 @@
     </ol> --}}
     <div class="carousel-inner" role="listbox">
         <div class="carousel-item active">
-            <img src="{{asset('assets/img/photo1.png')}}" class="img-fluid w-100" id="gambar_slider" alt="First slide">
+            <img src="{{asset('assets/img/tartultah.png')}}" class="img-fluid w-100" id="gambar_slider" alt="First slide">
         </div>
         <div class="carousel-item">
             <img src="{{asset('assets/img/photo2.png')}}" class="img-fluid w-100" id="gambar_slider" alt="Second slide">
