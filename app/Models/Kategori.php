@@ -21,6 +21,6 @@ class Kategori extends Model
     }
 
     public function subkategori(){
-        return $this->hasMany(Subkategori::class, 'id');
+        return $this->hasMany(Subkategori::class,'id_kategori', 'id');
     }
 }

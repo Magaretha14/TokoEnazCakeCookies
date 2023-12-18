@@ -35,7 +35,7 @@
     <!-- navbar -->
     <nav class="navbar navbar-expand-md navbar-custom shadow-sm py-3 fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}"><b>{{ config('app.name') }}</b></a>
+            <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('assets/img/logo.png') }}" alt="Logo" height="40"><b>{{ config('app.store_name') }}</b></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -55,10 +55,11 @@
                                 {{ $r->nama_kategori }}
                             </a>
 
-                            @if ($r->sub_kategori && $r->sub_kategori->count() > 0)
+                            @if ($r->subkategori && $r->subkategori->count() > 0)
                                 <div class="dropdown-menu" aria-labelledby="kategoriDropdown{{ $r->id }}">
-                                    @foreach ($r->sub_kategori as $sub)
-                                        <a class="dropdown-item" href="{{ url('subkategori/' . $sub->id_kategori) }}">
+                                    @foreach ($r->subkategori as $sub)
+                                        <a class="dropdown-item"
+                                            href="{{ url('subkategori/' . $sub->id) }}">
                                             {{ $sub->nama_subkategori }}
                                         </a>
                                     @endforeach
@@ -66,6 +67,8 @@
                             @endif
                         </li>
                     @endforeach
+
+
 
                     <li class="nav-item">
                         @if (isset(auth()->user()->name))

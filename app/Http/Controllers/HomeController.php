@@ -38,7 +38,7 @@ class HomeController extends Controller
             ->leftJoin('sub_kategori', 'produk.id_sub_kategori', '=', 'sub_kategori.id')
             ->select('sub_kategori.nama_subkategori', 'kategori.nama_kategori as nama_kategori', 'produk.*');
         $data = [
-            'title'     => 'Toko Codekop',
+            'title'     => 'Enaz Cake&Cookies',
             'kategori'  => Kategori::All(),
             'subkategori' => SubKategori::All(),
             'produk'    => $produkdb->latest()->paginate(8),
@@ -64,12 +64,12 @@ class HomeController extends Controller
     {
         $edit = SubKategori::findOrFail($id);
         $produkdb = Produk::leftJoin('kategori', 'produk.id_kategori', '=', 'kategori.id')
-            ->leftJoin('subkategori', 'produk.id_subkategori', '=', 'subkategori.id') // Tambahkan join ke subkategori
-            ->select('kategori.nama_kategori', 'subkategori.nama_subkategori', 'produk.*') // Pilih kolom yang ingin ditampilkan
-            ->where('produk.id_kategori', $id);
+            ->leftJoin('sub_kategori', 'produk.id_sub_kategori', '=', 'sub_kategori.id') // Tambahkan join ke subkategori
+            ->select('kategori.nama_kategori', 'sub_kategori.nama_subkategori', 'produk.*') // Pilih kolom yang ingin ditampilkan
+            ->where('produk.id_sub_kategori', $id);
 
         $data = [
-            'title'     => $edit->nama_kategori,
+            'title'     => $edit->nama_subkategori,
             'kategori'  => Kategori::All(),
             'subkategori' => SubKategori::All(),
             'produk'    => $produkdb->latest()->paginate(8),

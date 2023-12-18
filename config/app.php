@@ -14,6 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'store_name' => ' Enaz Cake&Cookies',
 
     /*
     |--------------------------------------------------------------------------

@@ -135,7 +135,7 @@
                                 </div>
 
                                 <script>
-                                    document.getElementById('id_kategori').addEventListener('change', function () {
+                                    document.getElementById('id_kategori').addEventListener('change', function() {
                                         var selectedKategori = this.value;
                                         var subkategoriOptions = document.getElementById('id_sub_kategori').options;
 
@@ -151,47 +151,50 @@
                                     });
                                 </script>
                             </div>
-                        <div class="form-group mt-3">
-                            <label for="">Nama Produk</label>
-                            <input type="text" class="form-control @error('nama_produk') is-invalid @enderror" required
-                                value="{{ old('nama_produk') }}" name="nama_produk" id="nama_produk" placeholder="">
-                            @error('nama_produk')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <div class="form-group mt-3">
+                                <label for="">Nama Produk</label>
+                                <input type="text" class="form-control @error('nama_produk') is-invalid @enderror"
+                                    required value="{{ old('nama_produk') }}" name="nama_produk" id="nama_produk"
+                                    placeholder="">
+                                @error('nama_produk')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="">Deskripsi</label>
+                                <textarea class="form-control @error('deskripsi') is-invalid @enderror" rows="5" required name="deskripsi"
+                                    id="deskripsi" placeholder="">{{ old('deskripsi') }}</textarea>
+                                @error('deskripsi')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="">Harga jual</label>
+                                <input type="number" class="form-control @error('harga_jual') is-invalid @enderror"
+                                    required value="{{ old('harga_jual') }}" name="harga_jual" id="harga_jual"
+                                    placeholder="">
+                                @error('harga_jual')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="gambar">Gambar</label>
+                                <input type="file" class="form-control @error('gambar') is-invalid @enderror" required
+                                    value="{{ old('gambar') }}" name="gambar" id="gambar" placeholder="">
+                                <small class="text-muted">Maksimal ukuran gambar: 1 MB</small>
+                                @error('gambar')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="form-group mt-3">
-                            <label for="">Deskripsi</label>
-                            <textarea class="form-control @error('deskripsi') is-invalid @enderror" rows="5" required name="deskripsi"
-                                id="deskripsi" placeholder="">{{ old('deskripsi') }}</textarea>
-                            @error('deskripsi')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
-                        <div class="form-group mt-3">
-                            <label for="">Harga jual</label>
-                            <input type="number" class="form-control @error('harga_jual') is-invalid @enderror" required
-                                value="{{ old('harga_jual') }}" name="harga_jual" id="harga_jual" placeholder="">
-                            @error('harga_jual')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group mt-3">
-                            <label for="">Gambar</label>
-                            <input type="file" class="form-control @error('gambar') is-invalid @enderror" required
-                                value="{{ old('gambar') }}" name="gambar" id="gambar" placeholder="">
-                            @error('gambar')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-                </form>
             </div>
         </div>
-    </div>
     </div>
     <div class="modal fade" id="modelIdEdit" data-bs-backdrop="static" tabindex="-1" role="dialog"
         aria-labelledby="modelTitleId" aria-hidden="true">
