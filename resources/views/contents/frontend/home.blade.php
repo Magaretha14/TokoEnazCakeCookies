@@ -15,10 +15,10 @@
     </ol> --}}
     <div class="carousel-inner" role="listbox">
         <div class="carousel-item active">
-            <img src="{{asset('assets/img/tartultah.png')}}" class="img-fluid w-100" id="gambar_slider" alt="First slide">
+            <img src="{{asset('assets/img/caropic1.png')}}" class="img-fluid w-100" id="gambar_slider" alt="First slide">
         </div>
         <div class="carousel-item">
-            <img src="{{asset('assets/img/photo2.png')}}" class="img-fluid w-100" id="gambar_slider" alt="Second slide">
+            <img src="{{asset('assets/img/caropic2.png')}}" class="img-fluid w-100" id="gambar_slider" alt="Second slide">
         </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
@@ -30,7 +30,7 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
-<div class="container mt-5" style="background-color: white">
+<div class="container mt-5" style="background-color: #FFECEF">
     <div class="row">
         <div class="col-sm-9 mx-auto">
             <!--product -->
@@ -43,7 +43,7 @@
                 @include('components.frontend.produk_list')
             </div>
             <!-- end product -->
-            <div class="official mt-3" style="background-color: #FFE5EC; margin-bottom: 40px">
+            <div class="official mt-3" style="background-color: #FFC2D1; margin-bottom: 40px">
                 <div class="row">
                     <div class="col-sm-7">
                         <div class="official-content">

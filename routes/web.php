@@ -18,6 +18,7 @@ use App\Models\SubKategori;
 Route::get('/', [Controllers\HomeController::class, 'index'])->name('home.index');
 Route::get('produk/{kategori}', [Controllers\HomeController::class, 'produk'])->name('home.produk');
 Route::get('kategori/{kategori}', [Controllers\HomeController::class, 'kategori'])->name('home.kategori');
+Route::get('subkategori/{subkategori}', [Controllers\HomeController::class, 'subkategori'])->name('home.subkategori');
 Route::get('search', [Controllers\HomeController::class, 'search'])->name('home.search');
 Route::get('home', [Controllers\HomeController::class, 'redir_admin'])->name('home.redir_admin');
 

@@ -5,7 +5,7 @@
 html,body
 {
     scroll-behavior: smooth;
-    background:#ffe5ec !important;
+    background:#FFECEF !important;
     font-family: 'Nunito', sans-serif;
     color:#333;
     width:100%;
@@ -13,7 +13,7 @@ html,body
 
 body{
     color:#333;
-    background:#ffe5ec !important;
+    background:#FFECEF !important;
     font-size: 14px;
     width:100%;
     overflow-x:hidden;
