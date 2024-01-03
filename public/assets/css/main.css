@@ -104,7 +104,7 @@ body{
 }
 /** text color **/
 .text-primary{
-    color: #0c4e68 !important;
+    color: #fb6f92 !important;
 }
 .text-success{
     color: #47993a !important;
@@ -166,7 +166,7 @@ body{
 }
 
 .text-produk:hover{
-    color:#3c73a8;
+    color:#fb6f92;
     font-weight: bold;
 }
 

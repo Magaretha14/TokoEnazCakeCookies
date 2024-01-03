@@ -51,7 +51,7 @@
                                     <td>Rp{{ number_format($r->harga_jual) }},-</td>
 
                                     <td>
-                                        <a href="{{ route('admin.edit_produk', $r) }}" data-id="{{ $r->id }}"
+                                        <a href="{{ route('admin.edit_produk', ['id' => $r->id]) }}" data-id="{{ $r->id }}"
                                             class="btn btn-success btn-sm ubah" title="Edit">
                                             <i class="fa fa-edit"></i>
                                         </a>

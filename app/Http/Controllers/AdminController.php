@@ -157,7 +157,7 @@ class AdminController extends Controller
 
             // Produk::where('id', $request->get('id'))->update($produkdb);
 
-            return redirect()->back()->with("success", " Berhasil Update Data Produk " . $request->get("nama_produk") . ' !');
+            return redirect('admin/produk')->with("success", " Berhasil Update Data Produk " . $request->get("nama_produk") . ' !');
         } else {
             return redirect()->back()->withErrors($validator)->with("failed", " Gagal Update Data ! ");
         }

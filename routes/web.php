@@ -29,7 +29,7 @@ Route::group(['middleware' => 'revalidate'], function() {
     Route::prefix('admin/produk')->group(function () {
         Route::get('/', [App\Http\Controllers\AdminController::class, 'produk'])->name('admin.produk');
         Route::get('delete/{kategori}', [App\Http\Controllers\AdminController::class, 'delete_produk'])->name('admin.delete_produk');
-        Route::post('edit', [App\Http\Controllers\AdminController::class, 'edit_produk'])->name('admin.edit_produk');
+        Route::get('edit/', [App\Http\Controllers\AdminController::class, 'edit_produk'])->name('admin.edit_produk');
         Route::post('create', [App\Http\Controllers\AdminController::class, 'create_produk'])->name('admin.create_produk');
         Route::post('update', [App\Http\Controllers\AdminController::class, 'update_produk'])->name('admin.update_produk');
         Route::patch('makebs/{kategori}', [App\Http\Controllers\AdminController::class, 'make_bestseller'])->name('admin.make_bestseller');

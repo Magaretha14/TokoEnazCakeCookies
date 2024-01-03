@@ -72,7 +72,7 @@
 
                     <li class="nav-item">
                         @if (isset(auth()->user()->name))
-                            <a class="nav-link active bg-primary text-white" href="{{ url('admin') }}">Dashboard</a>
+                            <a class="nav-link active bg-pink text-white" href="{{ url('admin') }}">Dashboard</a>
                         @else
                             <a class="nav-link active" href="{{ url('login') }}">Login</a>
                         @endif
