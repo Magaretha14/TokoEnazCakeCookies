@@ -127,7 +127,7 @@
             <input type="hidden" value="{{ $edit->id }}" name="id">
 
             <div class="form-group mt-3">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="/admin/produk" class="btn btn-secondary">Cancel</a>
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
         </form>
